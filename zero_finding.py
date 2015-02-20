@@ -3,7 +3,7 @@ import scipy
 
 def bisection (a , b, xtol, maxit):
 	# could improve rounding as a param
-	"reliable 1D zero-finding: returns x where f(x)=0, xtol defines precision"
+	"reliable but slow 1D zero-finding: returns x where f(x)=0, xtol defines precision"
 
 	xtol = np.float32(10 ** -xtol);
 	counter = 0;
@@ -42,7 +42,7 @@ def bisection (a , b, xtol, maxit):
 	return "ran " + str(maxit) + ' times'
 
 def newton (x0, ftol, maxit):
-	"fast, smart, single-point 1D zero-finding: returns x where f(x)=0"
+	"needs single point,fast, but f' must exists"
 	# xk_1 = xk - f(xk)/f'(xk)
 	counter = 0;
 	ftol = np.float32(10 ** -ftol);
@@ -67,7 +67,7 @@ def newton (x0, ftol, maxit):
 	return "ran " + str(maxit) + " times";
 
 def secant (x, x_1, ftol, maxit):
-	"safer method than newton, faster method than bisection"
+	"safer method than newton, faster method than bisection, has problem with extrapolation when interval is large"
 	# x1 = x - ((f(x)(x-x_1))/(f(x)-f(x_1))
 	ftol = np.float32(10 ** -ftol);
 	counter = 0;
@@ -93,6 +93,7 @@ def secant (x, x_1, ftol, maxit):
 
 
 def wheeler(x0, x1, ftol, maxit):
+	"modified secant method, no problem with extrapolation"
 	ftol = np.float32(10 ** -ftol)
 	if f(x0) == 0.0 or f(x1) == 0.0 or f(x0)*f(x1)>0.0: return
  	mu = 1
